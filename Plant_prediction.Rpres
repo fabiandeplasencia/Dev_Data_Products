@@ -1,0 +1,44 @@
+Developing Data Products Project: Plant Prediction
+========================================================
+author: Fabian de Plasencia
+date: 24/01/2015
+
+Introduction
+========================================================
+
+This R Presentation is part of the Developing Data Products course final assignment, and
+describes the application uploades to shinyapps.io
+ 
+Application Description
+========================================================
+
+The application first sets a decision tree model to predict the species of a 
+given plant based on the iris dataset. Then, checking the values introduced by 
+the user, shows the result of the prediction, two plots with the Petal/Sepal
+ Length and Width, and finally plots the decision tree.
+
+
+The Data
+========================================================
+
+The Iris dataset  gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.
+```{r,echo=FALSE}
+library(datasets)
+plot(iris$Petal.Length,iris$Sepal.Length,col=iris$Species)
+legend("topleft", c("setosa", "versicolor", "virginica"),pch=c(1),col=c("black","red","green"))
+```
+
+
+Prediction Model used
+========================================================
+
+For the prediction the app will use a tree based model, with a traincontrol of 5 bootstrappings:
+<small style="font-size:.7em">
+```{r}
+library(caret)
+library(rpart)
+library(e1071)
+fit <- train(Species ~ ., method="rpart", data=iris,trControl = trainControl(number=5))
+fit$finalModel
+```
+</small>
